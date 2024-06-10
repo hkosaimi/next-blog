@@ -1,7 +1,11 @@
 "use client";
+
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
+import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 const navLinks = [
   {
     href: "/",
@@ -11,14 +15,17 @@ const navLinks = [
     href: "/posts",
     label: "Posts",
   },
-  {
-    href: "/create-posts",
-    label: "Create Post",
-  },
 ];
-function Header() {
+function Header({ isPermited }: { isPermited: boolean }) {
   const pathname = usePathname();
-  console.log(pathname);
+  const links = [...navLinks];
+
+  if (isPermited) {
+    links.push({ href: "/create-posts", label: "Create post" });
+  } else {
+    links.push({ href: "/api/auth/login", label: "Sign in" });
+  }
+
   return (
     <div className="flex justify-between items-center py-4 px-7 border-b">
       <Link href="/">
@@ -31,8 +38,8 @@ function Header() {
         />
       </Link>
       <nav className="">
-        <ul className="flex gap-x-5 font-bold text-[20px]">
-          {navLinks.map((link) => (
+        <ul className="flex gap-x-5 font-bold text-[16px] lg:text-[20px]">
+          {links.map((link) => (
             <li key={link.href}>
               <Link
                 className={` ${pathname === link.href ? "text-black" : "text-zinc-400"}`}
@@ -41,6 +48,7 @@ function Header() {
               </Link>
             </li>
           ))}
+          {/*   {isPermited && <User color="#000" />} */}
         </ul>
       </nav>
     </div>

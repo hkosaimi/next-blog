@@ -1,7 +1,9 @@
-import { useState } from "react";
-import Madri from "./Madri";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Roles, Users } from "@kinde/management-api-js";
+export default async function Home() {
+  const { getPermission } = getKindeServerSession();
+  const permission = await getPermission("create:post");
 
-export default function Home() {
   return (
     <main className="text-center pt-32 px-5">
       <h1 className="text-4xl md:text-4xl font-bold mb-5">welcome to my blog</h1>
@@ -10,6 +12,7 @@ export default function Home() {
         nesciunt quidem, exercitationem necessitatibus quisquam aut! Adipisci dignissimos
         accusantium alias quidem hic vitae quibusdam rerum nesciunt iure quis.
       </p>
+      {permission?.isGranted ? <h1>Admin</h1> : <h1>User</h1>}
     </main>
   );
 }

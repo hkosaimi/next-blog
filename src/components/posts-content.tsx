@@ -1,5 +1,5 @@
 import React from "react";
-import UpvoteBtn from "./upvote-btn";
+
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
 
@@ -19,7 +19,6 @@ async function PostsContent({ paramss }: { paramss: { id: string } }) {
         <h1 className="text-5xl font-semibold">{post.title}</h1>
         <p className="mx-auto max-w-[700px]">{post.body}</p>
       </div>
-      <UpvoteBtn />
     </div>
   );
 }
